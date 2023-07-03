@@ -1,0 +1,17 @@
+{
+  "definitions": {
+    "scopes": {
+      "$id": "#scopes",
+      "type": "array",
+      "additionalProperties": false,
+      "items": {
+        "type": "string",
+        "enum": [
+          "api-gateway",
+          "catalog-service",
+          "order-service"
+        ]
+      }
+    }
+  }
+}

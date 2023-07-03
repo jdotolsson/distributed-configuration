@@ -1,0 +1,11 @@
+
+{
+    "json.schemas": [
+        {
+          "fileMatch": [
+            "/src/configuration/configurations/environments/**/*.json"
+          ],
+          "url": "./src/configuration/schemas/config-schema.json"
+        }
+      ]
+}

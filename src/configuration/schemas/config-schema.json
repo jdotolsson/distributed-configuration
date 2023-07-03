@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "definitions": {  
+    "ConfigObjectRecurse": {
+      "type": ["object", "array"],
+      "patternProperties": {
+          "^.*$": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/ConfigObjectRecurse"
+              },
+              {
+                "type": "string"                                         
+              },
+              {
+                "type": "integer"                                         
+              },
+              {
+                "type": "boolean"                                         
+              },
+              {
+                "type": "number"                                         
+              }
+            ]
+          }
+        }
+    },
+    "Tags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },    
+    "ConfigObject": {
+      "type": "object",
+      "properties": {
+        "Value": {
+          "type": ["object", "string", "array"]            
+        },
+        "ContentType": {
+          "type": "string"
+        },
+        "AdditionalScopes": {
+          "$ref": "./../configurations/globals/scopes-schema-definitions.json#/definitions/scopes"
+        },
+        "Tags": {
+          "$ref": "#/definitions/Tags"
+        }
+      },
+      "required": ["Value"],
+      "if": {
+        "properties": {
+          "Value": {
+            "type": ["object", "array"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ContentType": {
+            "const": "application/json"
+          },
+          "Value": {
+              "$ref": "#/definitions/ConfigObjectRecurse"
+          }
+        },       
+        "required": ["ContentType"]
+      },
+      "else": {
+          "if":
+          {
+            "properties": {
+              "Value": {
+                "pattern": "\\.vault\\.azure\\.net"
+              }
+            } 
+          },
+        "then": {    
+            "properties": {
+                "ContentType": {
+                    "const": "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8"
+                }
+            },
+            "required": ["ContentType"]             
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "Scopes": {
+      "$ref": "./../configurations/globals/scopes-schema-definitions.json#/definitions/scopes"
+    }
+  },
+  "patternProperties": {
+    "^[a-z:]*$": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ConfigObject"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"                                         
+        },
+        {
+          "type": "boolean"                                         
+        },
+        {
+          "type": "number"                                         
+        }
+      ],
+      "description": "Properties are limited to a-z characters and special ':' separator"
+    }
+  },
+  "required": ["Scopes"],
+  "additionalProperties": false
+}
