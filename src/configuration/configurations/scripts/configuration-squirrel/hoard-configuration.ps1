@@ -37,7 +37,7 @@ function Get-VaultValues {
             foreach ($propertyScope in $localScopes) {
                 $config = [PSCustomObject]@{
                     Name        = if ($Path) { "$($Path):$($property.Name)" } else { $property.Name }
-                    Value       = $property.Value
+                    Value       = "{ ""uri"":""$($property.Value)"" }" 
                     ContentType = "application/vnd.microsoft.appconfig.keyvaultref+json;charset=utf-8"
                     Label       = "$Environment-$propertyScope"
                     Tags        = $Tags

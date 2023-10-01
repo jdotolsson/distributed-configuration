@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <AzureAppConfigurationUri>https://appcs-dist-cfg-nonprod-01.azconfig.io</AzureAppConfigurationUri>
+      <AppEnvironment>dev</AppEnvironment>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>
